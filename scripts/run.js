@@ -1,8 +1,25 @@
 const main = async () => {
+    const [owner, randomPerson] = await hre.ethers.getSigners();
     const xContractFactory = await hre.ethers.getContractFactory("XPortal");
     const xContract = await xContractFactory.deploy();
     await xContract.deployed();
+
     console.log("Contract deployed to:", xContract.address);
+    console.log("Contract deployed by:", owner.address);
+
+    let waveCount;
+  waveCount = await xContract.getTotalWaves();
+
+  let waveTxn = await xContract.wave();
+  await waveTxn.wait();
+
+  waveCount = await xContract.getTotalWaves();
+
+  waveTxn = await xContract.connect(randomPerson).wave();
+  await waveTxn.wait();
+
+  waveCount = await xContract.getTotalWaves();
+
   };
   
   const runMain = async () => {
