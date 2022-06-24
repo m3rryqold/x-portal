@@ -1,36 +1,35 @@
 const main = async () => {
-    const [owner, randomPerson] = await hre.ethers.getSigners();
-    const xContractFactory = await hre.ethers.getContractFactory("XPortal");
-    const xContract = await xContractFactory.deploy();
-    await xContract.deployed();
+  const xContractFactory = await hre.ethers.getContractFactory("XPortal");
+  const xContract = await xContractFactory.deploy();
+  await xContract.deployed();
+  console.log("Contract addy:", xContract.address);
 
-    console.log("Contract deployed to:", xContract.address);
-    console.log("Contract deployed by:", owner.address);
-
-    let waveCount;
+  let waveCount;
   waveCount = await xContract.getTotalWaves();
+  console.log(waveCount.toNumber());
 
-  let waveTxn = await xContract.wave();
-  await waveTxn.wait();
+  /**
+   * Let's send a few waves!
+   */
+  let waveTxn = await xContract.wave("A message!");
+  await waveTxn.wait(); // Wait for the transaction to be mined
 
-  waveCount = await xContract.getTotalWaves();
+  const [_, randomPerson] = await hre.ethers.getSigners();
+  waveTxn = await xContract.connect(randomPerson).wave("Another message!");
+  await waveTxn.wait(); // Wait for the transaction to be mined
 
-  waveTxn = await xContract.connect(randomPerson).wave();
-  await waveTxn.wait();
+  let allWaves = await xContract.getAllWaves();
+  console.log(allWaves);
+};
 
-  waveCount = await xContract.getTotalWaves();
+const runMain = async () => {
+  try {
+    await main();
+    process.exit(0);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
 
-  };
-  
-  const runMain = async () => {
-    try {
-      await main();
-      process.exit(0); // exit Node process without error
-    } catch (error) {
-      console.log(`epp, epp, JavaScript don join hands with solidity dey carry me where i no know.🏃‍♂️ 🏃${error}`);
-      process.exit(1); // exit Node process while indicating 'Uncaught Fatal Exception' error
-    }
-    // Read more about Node exit ('process.exit(num)') status codes here: https://stackoverflow.com/a/47163396/7974948
-  };
-  
-  runMain();
+runMain();
