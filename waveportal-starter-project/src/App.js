@@ -6,7 +6,7 @@ import abi from "./utils/XPortal.json";
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
 
-  const contractAddress = "0x0D0c85763F45c47e7BC38101ffeB6564940D9ef9"
+  const contractAddress = "0x6b024f7Fa5A8E1aF371A8454D26055dcA08b90E4"
   const contractABI = abi.abi
 
   const checkIfWalletIsConnected = async () => {
