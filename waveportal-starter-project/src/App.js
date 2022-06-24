@@ -8,7 +8,7 @@ const App = () => {
   const [allWaves, setAllWaves] = useState([]);
 
 
-  const contractAddress = "0x6b024f7Fa5A8E1aF371A8454D26055dcA08b90E4"
+  const contractAddress = "0xdC6449d1eA42c849883d327328FF66e292bdF34c"
   const contractABI = abi.abi
 
   const checkIfWalletIsConnected = async () => {
@@ -139,16 +139,13 @@ const App = () => {
         </div>
 
         <div className="bio">
-          Merrygold here, DevOps-ing and Blockchain-ing. Click the connect and wave button and see what's up, yayy. 😉
+          I am farza and I worked on self-driving cars so that's pretty cool right? Connect your Ethereum wallet and wave at me!
         </div>
 
         <button className="waveButton" onClick={wave}>
           Wave at Me
         </button>
 
-        {/*
-        * If there is no currentAccount render this button
-        */}
         {!currentAccount && (
           <button className="waveButton" onClick={connectWallet}>
             Connect Wallet
